@@ -31,7 +31,7 @@
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
-int main() {
+// int main() {
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
@@ -51,8 +51,8 @@ int main() {
     // 3. Limpeza:
     // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
 
-    return 0;
-}
+//     return 0;
+// }
 
 // --- Implementação das Funções ---
 
@@ -96,3 +96,58 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Definindo constantes para os tamanhos máximos das strings
+#define MAX_STRING_NOME 30
+#define MAX_STRING_COR 10
+
+// Estrutura para representar um território
+struct Territorio {
+    char nome[MAX_STRING_NOME];
+    char cor[MAX_STRING_COR];
+    int tropas;
+};
+
+// Função para limpar o buffer de entrada
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int main() {
+    struct Territorio mapa_mundo[5];
+
+    for (int i = 0; i < 5; i++) {
+        printf("<========= TERRITÓRIO %d  =========>\n", i + 1);
+
+        printf("Digite o nome do território %d: ", i + 1);
+        fgets(mapa_mundo[i].nome, MAX_STRING_NOME, stdin);
+        mapa_mundo[i].nome[strcspn(mapa_mundo[i].nome, "\n")] = '\0'; // Remove o newline
+
+        printf("Digite a cor do território %d (exemplo: verde): ", i + 1);
+        fgets(mapa_mundo[i].cor, MAX_STRING_COR, stdin);
+        mapa_mundo[i].cor[strcspn(mapa_mundo[i].cor, "\n")] = '\0'; // Remove o newline
+
+        printf("Digite o número de tropas no território %d: ", i + 1);
+        scanf("%d", &mapa_mundo[i].tropas);
+        limparBufferEntrada(); // Limpa o buffer de entrada após ler as tropas
+        printf("<==================================>\n");
+
+        printf("\n");
+    }
+
+        printf("<=========== MAPA MUNDO ===========>\n");
+    for (int i = 0; i < 5; i++) {
+        printf("\n<=============== %d ================>\n", i + 1);
+        printf("Nome: %s\n", mapa_mundo[i].nome);
+        printf("Cor: %s\n", mapa_mundo[i].cor);
+        printf("Tropas: %d\n", mapa_mundo[i].tropas);
+        printf("<==================================>\n");
+    }
+
+    return 0;
+}
